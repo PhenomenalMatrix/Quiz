@@ -1,4 +1,4 @@
-package com.orozbek.quiz;
+package com.orozbek.quiz.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.orozbek.quiz.R;
+import com.orozbek.quiz.data.QstRepo;
 import com.orozbek.quiz.ui.adapter.MainViewPagerAdapter;
 import com.orozbek.quiz.ui.customsView.CustomViewPager;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         viewPager = findViewById(R.id.main_view_pager);
+
 
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
