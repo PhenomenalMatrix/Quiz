@@ -62,15 +62,9 @@ public class QuizApiClient implements IQuizApiClient {
         call.enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null){
-                        Log.d("ololo", "onResponse: "+ response.body().toString());
-                        callBack.onSuccess(response.body());
-                    }else {
-                        callBack.onFailure(new Exception("Response is Empty" + response.code()));
-                    }
-                }else {
-                    callBack.onFailure(new Exception("Response is Empty" + response.code()));
+                if(response.isSuccessful() && response.body() != null){
+                    Log.e("kek", response.body().toString() );
+                    callBack.onSuccess(response.body());
                 }
             }
 

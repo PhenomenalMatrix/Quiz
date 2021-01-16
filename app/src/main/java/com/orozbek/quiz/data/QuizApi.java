@@ -17,6 +17,6 @@ public interface QuizApi {
             @Query("difficulty") String difficulty
     );
 
-    @GET("api.category.php")
+    @GET("api_category.php")
     Call<Category>getCategoryQst();
 }
