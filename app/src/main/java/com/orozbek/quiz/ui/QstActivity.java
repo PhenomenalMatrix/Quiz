@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.orozbek.quiz.R;
-import com.orozbek.quiz.data.QstRepo;
+import com.orozbek.quiz.data.local.QstRepo;
 import com.orozbek.quiz.data.local.QstModel;
 import com.orozbek.quiz.databinding.ActivityQstBinding;
 import com.orozbek.quiz.ui.adapter.QstAdapter;

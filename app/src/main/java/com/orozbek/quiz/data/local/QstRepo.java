@@ -1,4 +1,4 @@
-package com.orozbek.quiz.data;
+package com.orozbek.quiz.data.local;
 
 import com.orozbek.quiz.data.local.QstModel;
 

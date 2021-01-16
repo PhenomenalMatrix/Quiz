@@ -2,19 +2,24 @@ package com.orozbek.quiz.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.orozbek.quiz.QuizApp;
 import com.orozbek.quiz.R;
-import com.orozbek.quiz.data.QstRepo;
+import com.orozbek.quiz.data.IQuizApiClient;
+import com.orozbek.quiz.model.Category;
+import com.orozbek.quiz.model.Question;
 import com.orozbek.quiz.ui.adapter.MainViewPagerAdapter;
 import com.orozbek.quiz.ui.customsView.CustomViewPager;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        QuizApp.quizApiClient.getQuestions(new IQuizApiClient.QuestionsCallBack() {
+            @Override
+            public void onSuccess(List<Question> result) {
+                Log.d("ololo", new Gson().toJson(result));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
 
     }
 
