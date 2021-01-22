@@ -75,21 +75,4 @@ public class QstActivity extends AppCompatActivity implements OnItemClickListner
         qstViewModel.onItemClick(position);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.wtf("TAG","onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("TAG", "onResume: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e("TAG", "onDestroy: ");
-    }
 }

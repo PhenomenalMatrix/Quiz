@@ -16,19 +16,16 @@ import com.orozbek.quiz.model.QuizResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QstViewModel extends ViewModel implements OnItemClickListner, IQuizApiClient.QuestionsCallBack{
-
+public class QstViewModel extends ViewModel implements OnItemClickListner ,IQuizApiClient.QuestionsCallBack{
 
     MutableLiveData<List<Question>> quizResp = new MutableLiveData<>();
-
-
     MutableLiveData<Integer> answerAmount = new MutableLiveData<>();
 
     void getQst(int amount, int categId,String diff){
         QuizApp.quizApiClient.getQuestions(this,amount,categId,diff);
     }
 
-    @Override
+
     public void onItemClick(int position) {
         if (answerAmount.getValue() == null){
             answerAmount.setValue(0);

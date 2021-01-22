@@ -1,5 +1,6 @@
 package com.orozbek.quiz.ui.adapter;
 
+import android.graphics.LightingColorFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +123,11 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
                 mbinding.thirdBtn.setText(incorrectAnswer.get(2));
                 mbinding.fourBtn.setText(incorrectAnswer.get(3));
             }
+            mbinding.yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            });
         }
     }
 }
