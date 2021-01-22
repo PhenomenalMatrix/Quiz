@@ -17,8 +17,8 @@ public class QuizApiClient implements IQuizApiClient {
 
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://opentdb.com/")
             .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://opentdb.com/")
             .build();
 
 
@@ -26,26 +26,25 @@ public class QuizApiClient implements IQuizApiClient {
 
 
     @Override
-    public void getQuestions(QuestionsCallBack callBack) {
+    public void getQuestions(QuestionsCallBack callBack,int amount,int categoryId,String difficulty) {
         Call<QuizResponse> call = quizApi.getQuestions(
-                10,
-                10,
-                null);
+                amount,
+                categoryId,
+                difficulty.toLowerCase());
 
         Log.d("ololo", "Url - "+ call.request().url());
 
-        call.enqueue(new Callback<QuizResponse>() {
+
+        call.enqueue(new Callback<QuizResponse>()
+        {
             @Override
             public void onResponse(Call<QuizResponse> call, Response<QuizResponse> response) {
-                if (response.isSuccessful()){
-                    if(response.body() != null){
+                if (response.isSuccessful() && response.body() !=null){
                         callBack.onSuccess(response.body().getResults());
-                    }else {
-                        callBack.onFailure(new Exception("Response is Empty" + response.code()));
-                    }
-                }else {
-                    callBack.onFailure(new Exception("Response is Empty" + response.code()));
                 }
+//                else {
+//                    callBack.onFailure(new Exception("Response is Empty" + response.code()));
+//                }
             }
 
             @Override
@@ -56,6 +55,7 @@ public class QuizApiClient implements IQuizApiClient {
 
     }
 
+
     @Override
     public void getCategories(CategoryCallBack callBack) {
         Call<Category> call = quizApi.getCategoryQst();
@@ -63,7 +63,7 @@ public class QuizApiClient implements IQuizApiClient {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    Log.e("kek", response.body().toString() );
+                    Log.e("kek", response.body().toString());
                     callBack.onSuccess(response.body());
                 }
             }

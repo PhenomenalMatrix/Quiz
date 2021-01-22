@@ -59,17 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        QuizApp.quizApiClient.getQuestions(new IQuizApiClient.QuestionsCallBack() {
-            @Override
-            public void onSuccess(List<Question> result) {
-                Log.d("ololo", new Gson().toJson(result));
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-
-            }
-        });
 
     }
 

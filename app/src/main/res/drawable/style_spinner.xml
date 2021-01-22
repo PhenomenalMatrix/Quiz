@@ -5,7 +5,7 @@
             <solid android:color="@color/white"/>
             <corners android:radius="10dp"/>
         </shape>
-        <bitmap android:gravity="center_vertical|right"
+        <bitmap android:gravity="right"
             android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
             />
     </item>

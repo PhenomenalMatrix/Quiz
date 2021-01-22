@@ -22,7 +22,7 @@ import com.orozbek.quiz.R;
 import com.orozbek.quiz.databinding.MainFragmentBinding;
 import com.orozbek.quiz.model.Category;
 import com.orozbek.quiz.model.TriviaCategory;
-import com.orozbek.quiz.ui.QstActivity;
+import com.orozbek.quiz.ui.Qst.QstActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,11 @@ public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
     private MainFragmentBinding binding;
-    private Integer categoryCount;
+    private Integer categoriesId;
     private String categoryNameTitle;
+    private int amount;
+    private String difficult;
+
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -57,16 +60,11 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mViewModel.getCategory();
-        binding.btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),QstActivity.class));
-            }
-        });
         binding.seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 binding.tvQstAmountNumbers.setText(String.valueOf(i));
+                amount = i;
             }
 
             @Override
@@ -94,15 +92,35 @@ public class MainFragment extends Fragment {
                 binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        categoryCount = category.getTriviaCategoryList().get(i).getId();
+                        categoriesId = category.getTriviaCategoryList().get(i).getId();
                         categoryNameTitle = category.getTriviaCategoryList().get(i).getName();
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-
                     }
                 });
+            }
+        });
+        binding.spinnerDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                difficult = getResources().getStringArray(R.array.spinner)[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),QstActivity.class);
+                intent.putExtra("amountKey",amount);
+                intent.putExtra("catKey",categoriesId);
+                intent.putExtra("catNameKey",categoryNameTitle);
+                intent.putExtra("diffKey",difficult);
+                startActivityForResult(intent,0);
             }
         });
     }

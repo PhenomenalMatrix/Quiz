@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Question {
 
@@ -22,9 +23,9 @@ public class Question {
     @SerializedName("correct_answer")
     @Expose
     private String correctAnswer;
-    @SerializedName("incorrect_answer")
+    @SerializedName("incorrect_answers")
     @Expose
-    private ArrayList<String> incorrectAnswers;
+    private List<String> incorrectAnswers;
 
 
 
@@ -68,7 +69,7 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-    public ArrayList<String> getIncorrectAnswers() {
+    public List<String> getIncorrectAnswers() {
         return incorrectAnswers;
     }
 

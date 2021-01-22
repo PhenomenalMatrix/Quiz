@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class QuizResponse {
@@ -14,8 +14,15 @@ public class QuizResponse {
     private int responseCode;
     @SerializedName("results")
     @Expose
-    private ArrayList<Question> results;
+    List<Question> results = null;
 
+    public List<Question> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Question> results) {
+        this.results = results;
+    }
 
     public int getResponseCode() {
         return responseCode;
@@ -25,11 +32,5 @@ public class QuizResponse {
         this.responseCode = responseCode;
     }
 
-    public ArrayList<Question> getResults() {
-        return results;
-    }
 
-    public void setResults(ArrayList<Question> results) {
-        this.results = results;
-    }
 }

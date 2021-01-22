@@ -29,7 +29,7 @@ public class MainViewModel extends ViewModel {
         QuizApp.quizApiClient.getCategories(new IQuizApiClient.CategoryCallBack() {
             @Override
             public void onSuccess(Category categories) {
-                Log.e("kek", new Gson().toJson(categories) );
+                Log.e("kekLOL", new Gson().toJson(categories) );
                 category.setValue(categories);
             }
 
