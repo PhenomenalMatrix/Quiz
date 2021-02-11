@@ -27,7 +27,19 @@ public class Question {
     @Expose
     private List<String> incorrectAnswers;
 
+    private boolean answerClick;
 
+    public void setIncorrectAnswers(List<String> incorrectAnswers) {
+        this.incorrectAnswers = incorrectAnswers;
+    }
+
+    public boolean isAnswerClick() {
+        return answerClick;
+    }
+
+    public void setAnswerClick(boolean answerClick) {
+        this.answerClick = answerClick;
+    }
 
     public String getCategory() {
         return category;
@@ -76,4 +88,5 @@ public class Question {
     public void setIncorrectAnswers(ArrayList<String> incorrectAnswers) {
         this.incorrectAnswers = incorrectAnswers;
     }
+
 }
