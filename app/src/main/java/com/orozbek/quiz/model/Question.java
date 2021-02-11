@@ -28,6 +28,15 @@ public class Question {
     private List<String> incorrectAnswers;
 
     private boolean answerClick;
+    private int selectAnswerPosition;
+
+    public int getSelectAnswerPosition() {
+        return selectAnswerPosition;
+    }
+
+    public void setSelectAnswerPosition(int selectAnswerPosition) {
+        this.selectAnswerPosition = selectAnswerPosition;
+    }
 
     public void setIncorrectAnswers(List<String> incorrectAnswers) {
         this.incorrectAnswers = incorrectAnswers;

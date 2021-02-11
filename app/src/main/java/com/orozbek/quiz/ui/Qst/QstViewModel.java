@@ -37,7 +37,7 @@ public class QstViewModel extends ViewModel implements  IQuizApiClient.Questions
     public void onSuccess(List<Question> result) {
         if(result !=null){
             quizResp.setValue(result);
-            Log.e("fr", new Gson().toJson(result) );
+//            Log.e("fr", new Gson().toJson(result) );
         }
     }
 
