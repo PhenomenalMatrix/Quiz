@@ -1,5 +1,5 @@
 package com.orozbek.quiz.interfaces;
 
 public interface OnAnswerBtnClick {
-    void onAnswerClick(int position);
+    void onAnswerClick(int position, int selectAnswerPosition);
 }

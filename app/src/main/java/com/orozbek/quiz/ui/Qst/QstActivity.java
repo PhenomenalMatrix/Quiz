@@ -8,26 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.orozbek.quiz.QuizApp;
 import com.orozbek.quiz.R;
-import com.orozbek.quiz.data.local.QstRepo;
-import com.orozbek.quiz.data.local.QstModel;
 import com.orozbek.quiz.databinding.ActivityQstBinding;
 import com.orozbek.quiz.interfaces.OnAnswerBtnClick;
-import com.orozbek.quiz.interfaces.OnItemClickListner;
 import com.orozbek.quiz.model.Question;
 import com.orozbek.quiz.ui.adapter.QstAdapter;
-import com.orozbek.quiz.ui.main.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QstActivity extends AppCompatActivity implements OnItemClickListner, OnAnswerBtnClick {
+public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
 
     private ActivityQstBinding binding;
     private List<Question> qsts = new ArrayList<>();
@@ -46,7 +40,6 @@ public class QstActivity extends AppCompatActivity implements OnItemClickListner
         amount = getIntent().getIntExtra("amountKey",0);
         categoryId = getIntent().getIntExtra("catKey",0);
         categoryNameTitle = getIntent().getStringExtra("catNameKey");
-        Log.e("TAG", "onCreate: "+" "+difficult+" "+amount+" "+categoryId+" "+categoryNameTitle);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_qst);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         qstViewModel.getQst(amount,categoryId,difficult);
@@ -56,32 +49,49 @@ public class QstActivity extends AppCompatActivity implements OnItemClickListner
                 Log.e("TAG", "onChanged: "+ questions );
                 qsts.addAll(questions);
                 adapter.updateList(qsts);
+                getPosition();
                 Log.d("TAG", "onChanged: qstsAdd"+ qsts);
             }
         });
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(binding.qstRecycler);
-        adapter = new QstAdapter();
-        adapter.initListner(this);
+        adapter = new QstAdapter(this);
+//        adapter.initListner(this);
         binding.qstRecycler.setAdapter(adapter);
-        adapter.setOnItemClickListner(this);
         binding.qstRecycler.setLayoutManager(layoutManager);
         binding.progressBar.setMax(qsts.size());
         binding.progressBar.setProgress(adapter.getItemCount());
         binding.progressTv.setText(adapter.getItemCount()+"/"+qsts.size());
+        binding.skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                qstViewModel.skipClick();
+            }
+        });
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                qstViewModel.onBackPressed();
+            }
+        });
+    }
+
+    private void getPosition() {
+        qstViewModel.currentQuestionPosition.observeForever(new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                binding.qstRecycler.scrollToPosition(integer);
+                binding.progressTv.setText(integer+1+" / "+ amount);
+                binding.progressBar.setMax(amount);
+                binding.progressBar.setProgress(integer+1);
+            }
+        });
     }
 
 
-    @Override
-    public void onItemClick(int position) {
-        qstViewModel.onItemClick(position);
-    }
-
-
 
     @Override
-    public void onAnswerClick(int position) {
-        position++;
-        binding.qstRecycler.smoothScrollToPosition(position);
+    public void onAnswerClick(int position, int selectAnswerPosition) {
+        qstViewModel.onAnswerClick(position,selectAnswerPosition);
     }
 }

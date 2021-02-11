@@ -30,6 +30,16 @@ public class Question {
     private boolean answerClick;
     private int selectAnswerPosition;
 
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
+    }
+
+    private List<String> answers;
+
     public int getSelectAnswerPosition() {
         return selectAnswerPosition;
     }
