@@ -116,12 +116,13 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
             incorrectAnswer.addAll(question.getIncorrectAnswers());
             Collections.shuffle(incorrectAnswer);
             question.setAnswers(incorrectAnswer);
+
             mbinding.qstTv.setText(Html.fromHtml(question.getQuestion()));
             if(question.getType().equals("boolean") ){
                 mbinding.multiplyBtnsConstraint.setVisibility(View.INVISIBLE);
                 mbinding.btnsConstraint.setVisibility(View.VISIBLE);
-                mbinding.yesBtn.setText("TRUE");
-                mbinding.noBtn.setText("FALSE");
+                mbinding.yesBtn.setText("true");
+                mbinding.noBtn.setText("false");
             }
             if(question.getType().equals("multiple")) {
                 mbinding.btnsConstraint.setVisibility(View.GONE);
@@ -131,8 +132,9 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
                 mbinding.thirdBtn.setText(question.getAnswers().get(2));
                 mbinding.fourBtn.setText(question.getAnswers().get(3));
             }
-            if(question.isAnswerClick())
+            if(question.isAnswerClick()){
                 btnState(question);
+            }
             incorrectAnswer.clear();
         }
 
@@ -155,7 +157,7 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
         }
 
         private void btnState(Question question) {
-            if (question.getSelectAnswerPosition() != 0){
+//            if (question.getSelectAnswerPosition() != 0){
                 switch (question.getSelectAnswerPosition()){
                     case 0:
                         if (question.getCorrectAnswer().equals(question.getAnswers().get(0))){
@@ -197,7 +199,7 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
                             Log.e("TAG", "btnState: incorrect");
                         }
                         break;
-                }
+//                }
             }
         }
 

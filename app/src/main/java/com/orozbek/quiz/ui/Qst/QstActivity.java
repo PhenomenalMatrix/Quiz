@@ -56,7 +56,7 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(binding.qstRecycler);
         adapter = new QstAdapter(this);
-//        adapter.initListner(this);
+        adapter.setHasStableIds(true);
         binding.qstRecycler.setAdapter(adapter);
         binding.qstRecycler.setLayoutManager(layoutManager);
         binding.progressBar.setMax(qsts.size());
