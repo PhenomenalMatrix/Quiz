@@ -40,7 +40,7 @@ public class Question {
 
     private List<String> answers;
 
-    public int getSelectAnswerPosition() {
+    public Integer getSelectAnswerPosition() {
         return selectAnswerPosition;
     }
 

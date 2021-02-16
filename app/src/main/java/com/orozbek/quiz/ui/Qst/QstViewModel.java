@@ -9,6 +9,9 @@ import com.orozbek.quiz.QuizApp;
 import com.orozbek.quiz.data.IQuizApiClient;
 import com.orozbek.quiz.model.Question;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class QstViewModel extends ViewModel implements  IQuizApiClient.QuestionsCallBack{
@@ -16,15 +19,19 @@ public class QstViewModel extends ViewModel implements  IQuizApiClient.Questions
      MutableLiveData<List<Question>> quizResp = new MutableLiveData<>();
      MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
      List<Question> mQuestion;
+     MutableLiveData<Boolean> startResult = new MutableLiveData<>();
     private Integer count;
+     Integer correctAnswerCounter;
 
     public QstViewModel (){
         currentQuestionPosition.setValue(0);
         count=0;
+        correctAnswerCounter = 0;
     }
 
     void getQst(int amount, int categId,String diff){
-        QuizApp.quizApiClient.getQuestions(this,amount,categId,diff);
+//        QuizApp.quizApiClient.getQuestions(this,amount,categId,diff);
+        QuizApp.repository.getQuestionsRepo(this,amount,categId,diff);
     }
 
     void skipClick(){
@@ -33,7 +40,7 @@ public class QstViewModel extends ViewModel implements  IQuizApiClient.Questions
             quizResp.setValue(mQuestion);
             currentQuestionPosition.setValue(++count);
             if (currentQuestionPosition.getValue() + 1 == mQuestion.size()){
-                Log.e("TAG", "SkipClick: finish");
+                startResult.setValue(true);
             }
         }
     }
@@ -73,5 +80,9 @@ public class QstViewModel extends ViewModel implements  IQuizApiClient.Questions
     @Override
     public void onFailure(Exception e) {
 
+    }
+
+    public void correctAnswer() {
+        correctAnswerCounter++;
     }
 }

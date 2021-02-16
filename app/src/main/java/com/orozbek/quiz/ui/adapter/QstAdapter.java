@@ -14,6 +14,7 @@ import com.orozbek.quiz.R;
 import com.orozbek.quiz.databinding.QstItemsBinding;
 import com.orozbek.quiz.interfaces.OnAnswerBtnClick;
 import com.orozbek.quiz.model.Question;
+import com.orozbek.quiz.model.QuizResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +54,8 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
 
     public class QstVH extends RecyclerView.ViewHolder {
 
-
+        private QuizResult quizResultModel;
+        private int correctAnswercounter=0;
         private OnAnswerBtnClick onAnswerBtnClick;
         private List<String> incorrectAnswer = new ArrayList<>();
         private  QstItemsBinding mbinding;
@@ -112,11 +114,6 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
                 setButtonsEnabled(true);
             }
             mbinding.setQstModel(question);
-            incorrectAnswer.add(question.getCorrectAnswer());
-            incorrectAnswer.addAll(question.getIncorrectAnswers());
-            Collections.shuffle(incorrectAnswer);
-            question.setAnswers(incorrectAnswer);
-
             mbinding.qstTv.setText(Html.fromHtml(question.getQuestion()));
             if(question.getType().equals("boolean") ){
                 mbinding.multiplyBtnsConstraint.setVisibility(View.INVISIBLE);
@@ -135,7 +132,6 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
             if(question.isAnswerClick()){
                 btnState(question);
             }
-            incorrectAnswer.clear();
         }
 
         private void setButtonsEnabled(boolean enabled){
@@ -157,51 +153,58 @@ public class QstAdapter extends RecyclerView.Adapter<QstAdapter.QstVH> {
         }
 
         private void btnState(Question question) {
-//            if (question.getSelectAnswerPosition() != 0){
-                switch (question.getSelectAnswerPosition()){
+            if (question.getSelectAnswerPosition() != null) {
+                switch (question.getSelectAnswerPosition()) {
                     case 0:
-                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))){
+                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))) {
+                            onAnswerBtnClick.correctAnswer(true);
                             mbinding.firstBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
                             mbinding.yesBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
-                            Log.e("TAG", "btnState: correct" );
-                        }else {
+                            Log.e("TAG", "btnState: correct");
+                        } else {
+                            onAnswerBtnClick.correctAnswer(false);
                             mbinding.firstBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             mbinding.yesBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             Log.e("TAG", "btnState: incorrect");
                         }
                         break;
                     case 1:
-                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))){
+                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))) {
+                            onAnswerBtnClick.correctAnswer(true);
                             mbinding.secondBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
                             mbinding.noBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
-                            Log.e("TAG", "btnState: correct" );
-                        }else {
+                            Log.e("TAG", "btnState: correct");
+                        } else {
+                            onAnswerBtnClick.correctAnswer(false);
                             mbinding.secondBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             mbinding.noBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             Log.e("TAG", "btnState: incorrect");
                         }
                         break;
                     case 2:
-                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))){
+                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))) {
+                            onAnswerBtnClick.correctAnswer(true);
                             mbinding.thirdBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
-                            Log.e("TAG", "btnState: correct" );
-                        }else {
+                            Log.e("TAG", "btnState: correct");
+                        } else {
+                            onAnswerBtnClick.correctAnswer(false);
                             mbinding.thirdBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             Log.e("TAG", "btnState: incorrect");
                         }
                         break;
                     case 3:
-                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))){
+                        if (question.getCorrectAnswer().equals(question.getAnswers().get(0))) {
+                            onAnswerBtnClick.correctAnswer(true);
                             mbinding.fourBtn.setBackgroundResource(R.drawable.correct_answer_btn_style);
-                            Log.e("TAG", "btnState: correct" );
-                        }else {
+                            Log.e("TAG", "btnState: correct");
+                        } else {
+                            onAnswerBtnClick.correctAnswer(false);
                             mbinding.fourBtn.setBackgroundResource(R.drawable.false_answer_btn_style);
                             Log.e("TAG", "btnState: incorrect");
                         }
                         break;
-//                }
+                }
             }
         }
-
     }
 }

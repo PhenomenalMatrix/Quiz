@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.orozbek.quiz.R;
 import com.orozbek.quiz.databinding.ActivityQstBinding;
 import com.orozbek.quiz.interfaces.OnAnswerBtnClick;
 import com.orozbek.quiz.model.Question;
+import com.orozbek.quiz.model.QuizResult;
 import com.orozbek.quiz.ui.adapter.QstAdapter;
+import com.orozbek.quiz.ui.result.ResultActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
     private int amount;
     private int categoryId;
     private String categoryNameTitle;
+    private QuizResult quizResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,6 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(binding.qstRecycler);
         adapter = new QstAdapter(this);
-        adapter.setHasStableIds(true);
         binding.qstRecycler.setAdapter(adapter);
         binding.qstRecycler.setLayoutManager(layoutManager);
         binding.progressBar.setMax(qsts.size());
@@ -72,6 +75,22 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
             @Override
             public void onClick(View view) {
                 qstViewModel.onBackPressed();
+            }
+        });
+        Strat();
+    }
+
+    private void Strat() {
+        qstViewModel.startResult.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Intent intent = new Intent(QstActivity.this,ResultActivity.class);
+                intent.putExtra("counter",qstViewModel.correctAnswerCounter);
+                intent.putExtra("amountRepo",amount);
+                intent.putExtra("catRepo",categoryNameTitle);
+                intent.putExtra("diffRepo",difficult);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -93,5 +112,12 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
     @Override
     public void onAnswerClick(int position, int selectAnswerPosition) {
         qstViewModel.onAnswerClick(position,selectAnswerPosition);
+    }
+
+    @Override
+    public void correctAnswer(boolean b) {
+        if (b){
+            qstViewModel.correctAnswer();
+        }
     }
 }
