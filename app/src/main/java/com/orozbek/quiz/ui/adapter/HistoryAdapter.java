@@ -22,7 +22,7 @@ import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistVH> {
 
-    List<QuizResult> data;
+    private List<QuizResult> data;
 
     OnClickListnerHist onClickListnerHist;
 
@@ -34,6 +34,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistVH> 
 
     public void setData(List<QuizResult> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     public HistoryAdapter() {
@@ -42,7 +43,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistVH> 
     @NonNull
     @Override
     public HistVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HistVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.data_base_item,parent,false));
+        return new HistVH(DataBaseItemBinding.bind(LayoutInflater.from(parent.getContext()).inflate(R.layout.data_base_item,parent,false)));
     }
 
     @Override
@@ -56,16 +57,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistVH> 
     }
 
     public class HistVH extends RecyclerView.ViewHolder {
-        private TextView diffHistTv;
-        private TextView catHistTv;
-        private TextView correctAnswerHistTv;
-        private TextView dateHistTv;
-        private Button deleteHistBtn;
-        private DataBaseItemBinding item;
-        public HistVH(@NonNull View binding) {
-            super(binding);
-            initViews(binding);
-            deleteHistBtn.setOnClickListener(new View.OnClickListener() {
+        DataBaseItemBinding binding;
+        public HistVH(@NonNull DataBaseItemBinding binding) {
+            super(binding.getRoot());
+            binding.deleteHistBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onClickListnerHist.onClick(getAdapterPosition());
@@ -73,18 +68,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistVH> 
             });
         }
 
-        private void initViews(View binding) {
-            diffHistTv = binding.findViewById(R.id.diff_hist_tv);
-            catHistTv = binding.findViewById(R.id.cat_hist_tv);
-            correctAnswerHistTv = binding.findViewById(R.id.correct_answer_hist_tv);
-            dateHistTv = binding.findViewById(R.id.date_hist_tv);
-        }
-
         public void onBind(QuizResult quizResult) {
-            diffHistTv.setText(quizResult.getDifficulty());
-            catHistTv.setText(quizResult.getCategory());
-            correctAnswerHistTv.setText(String.valueOf(quizResult.getCorrectAnswerAmount()));
-            dateHistTv.setText(String.valueOf(quizResult.getCreatedAt()));
+            binding.diffHistTv.setText(quizResult.getDifficulty());
+            binding.catHistTv.setText(quizResult.getCategory());
+            binding.correctAnswerHistTv.setText(String.valueOf(quizResult.getCorrectAnswerAmount()));
+            binding.dateHistTv.setText(String.valueOf(quizResult.getCreatedAt()));
         }
     }
 }

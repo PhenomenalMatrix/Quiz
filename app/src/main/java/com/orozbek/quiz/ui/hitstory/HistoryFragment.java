@@ -44,7 +44,6 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = HistoryFragmentBinding.bind(inflater.inflate(R.layout.history_fragment, container, false));
-
         return binding.getRoot();
     }
 
@@ -58,10 +57,10 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.histRecycler.setAdapter(histAdapter);
-        binding.histRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         histAdapter = new HistoryAdapter();
         histAdapter.setData(modelList);
+        binding.histRecycler.setAdapter(histAdapter);
+        binding.histRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         QuizApp.quizDataBase.quizDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<QuizResult>>() {
             @Override
             public void onChanged(List<QuizResult> quizResults) {
