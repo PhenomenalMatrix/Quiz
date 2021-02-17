@@ -69,6 +69,7 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
             @Override
             public void onClick(View view) {
                 qstViewModel.skipClick();
+
             }
         });
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +90,7 @@ public class QstActivity extends AppCompatActivity implements OnAnswerBtnClick {
                 intent.putExtra("amountRepo",amount);
                 intent.putExtra("catRepo",categoryNameTitle);
                 intent.putExtra("diffRepo",difficult);
+                binding.skipBtn.setText("finish");
                 startActivity(intent);
                 finish();
             }

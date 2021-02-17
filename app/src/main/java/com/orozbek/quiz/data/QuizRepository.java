@@ -1,14 +1,19 @@
 package com.orozbek.quiz.data;
 
+import androidx.lifecycle.LiveData;
+
+import com.orozbek.quiz.db.IHistoryStorage;
 import com.orozbek.quiz.model.Question;
+import com.orozbek.quiz.model.QuizResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class QuizRepository implements IQuizApiClient  {
+public class QuizRepository implements IQuizApiClient, IHistoryStorage  {
 
     private IQuizApiClient quizApiClient;
+
 
     public QuizRepository(IQuizApiClient quizApiClient) {
         this.quizApiClient = quizApiClient;
@@ -48,5 +53,30 @@ public class QuizRepository implements IQuizApiClient  {
         Collections.shuffle(answers);
         question.setAnswers(answers);
         return question;
+    }
+
+    @Override
+    public LiveData<ArrayList<QuizResult>> getAll() {
+        return null;
+    }
+
+    @Override
+    public QuizResult getQuizResult(int id) {
+        return null;
+    }
+
+    @Override
+    public int saveQuizResult(QuizResult quizResult) {
+        return 0;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }

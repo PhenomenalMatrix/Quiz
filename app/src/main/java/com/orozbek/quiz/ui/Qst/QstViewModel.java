@@ -1,6 +1,7 @@
 package com.orozbek.quiz.ui.Qst;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -39,7 +40,7 @@ public class QstViewModel extends ViewModel implements  IQuizApiClient.Questions
             mQuestion.get(currentQuestionPosition.getValue()).setAnswerClick(true);
             quizResp.setValue(mQuestion);
             currentQuestionPosition.setValue(++count);
-            if (currentQuestionPosition.getValue() + 1 == mQuestion.size()){
+            if (currentQuestionPosition.getValue() == mQuestion.size()){
                 startResult.setValue(true);
             }
         }

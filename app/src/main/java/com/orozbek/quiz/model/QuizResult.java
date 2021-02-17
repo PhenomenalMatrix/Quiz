@@ -1,23 +1,38 @@
 package com.orozbek.quiz.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.orozbek.quiz.db.converter.DateConverter;
+import com.orozbek.quiz.db.converter.QuestionConverter;
+
 import java.util.Date;
 import java.util.List;
 
+@Entity(tableName = "QResult")
 public class QuizResult {
-    private int id;
-    private String category;
-    private String difficulty;
-    private int questions;
-    private int correctAnswerAmount;
-    private Date createdAt;
 
-    public QuizResult(int id, String category, String difficulty, int questions, int correctAnswerAmount, Date createdAt) {
-        this.id = id;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @ColumnInfo(name = "category")
+    private String category;
+    @ColumnInfo(name = "difficulty")
+    private String difficulty;
+    @ColumnInfo(name = "correct_answer_amount")
+    private int correctAnswerAmount;
+    @TypeConverters({DateConverter.class})
+    private Date createdAt;
+    @TypeConverters({QuestionConverter.class})
+    private List<Question> questions;
+
+    public QuizResult(String category, String difficulty, int correctAnswerAmount, Date createdAt, List<Question> questions) {
         this.category = category;
         this.difficulty = difficulty;
-        this.questions = questions;
         this.correctAnswerAmount = correctAnswerAmount;
         this.createdAt = createdAt;
+        this.questions = questions;
     }
 
     public int getId() {
@@ -44,14 +59,6 @@ public class QuizResult {
         this.difficulty = difficulty;
     }
 
-    public int getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(int questions) {
-        this.questions = questions;
-    }
-
     public int getCorrectAnswerAmount() {
         return correctAnswerAmount;
     }
@@ -66,5 +73,13 @@ public class QuizResult {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

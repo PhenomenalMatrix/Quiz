@@ -12,6 +12,9 @@ import com.orozbek.quiz.databinding.ActivityResultBinding;
 import com.orozbek.quiz.model.QuizResult;
 import com.orozbek.quiz.ui.Qst.QstViewModel;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class ResultActivity extends AppCompatActivity {
 
     private ActivityResultBinding binding;
@@ -31,19 +34,17 @@ public class ResultActivity extends AppCompatActivity {
         correctCounter = getIntent().getIntExtra("counter",0);
         difficult = getIntent().getStringExtra("diffRepo");
         amount = getIntent().getIntExtra("amountRepo",0);
-//        quizResult.setCorrectAnswerAmount(correctCounter);
-//        quizResult.setQuestions(amount);
         category = getIntent().getStringExtra("catRepo");
-
         binding.diffInfTv.setText(difficult);
-
         binding.correctAnswersInfTv.setText(correctCounter + "/" + amount);
         int correctAnswerPercent =(int)((double)correctCounter/amount * 100);
+        quizResult = new QuizResult(category,difficult,correctCounter, Calendar.getInstance().getTime(),new ArrayList<>());
         binding.resultsInfTv.setText(correctAnswerPercent + "%");
         binding.catTitleTv.setText(category);
         binding.finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mViewModel.saveResult(quizResult);
                 finish();
             }
         });
